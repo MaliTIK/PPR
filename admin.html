@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – P.P.R. Pavimenti</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; color: #222; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { margin-top: 0; }
+    .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    label { display: block; font-weight: 600; margin: 12px 0 4px; }
+    input, textarea { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; }
+    textarea { min-height: 90px; resize: vertical; }
+    button { background: #1a5f7a; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 15px; cursor: pointer; }
+    button:hover { background: #144a5e; }
+    button.secondary { background: #6c757d; }
+    button.danger { background: #c0392b; }
+    .login-box { max-width: 400px; margin: 80px auto; }
+    .hidden { display: none; }
+    .gallery-admin { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 12px; }
+    .gallery-admin .item { position: relative; }
+    .gallery-admin img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; }
+    .gallery-admin .remove { position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; }
+    .status { padding: 10px; border-radius: 8px; margin: 10px 0; }
+    .status.ok { background: #d4edda; color: #155724; }
+    .status.err { background: #f8d7da; color: #721c24; }
+    .row { display: flex; gap: 12px; }
+    .row > * { flex: 1; }
+  </style>
+</head>
+<body>
+  <div id="login" class="login-box card">
+    <h1>Admin Login</h1>
+    <label>Email</label>
+    <input type="email" id="email" placeholder="your@email.com">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••">
+    <button onclick="login()" style="width:100%; margin-top:16px;">Login</button>
+    <div id="login-status" class="status" style="display:none;"></div>
+  </div>
+
+  <div id="admin" class="container hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h1>P.P.R. Admin Panel</h1>
+      <button class="secondary" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="card">
+      <h2>Company Info</h2>
+      <div class="row">
+        <div><label>Name</label><input id="name"></div>
+        <div><label>Owner</label><input id="owner"></div>
+      </div>
+      <label>Tagline (Italian)</label><input id="tagline_it">
+      <label>Tagline (English)</label><input id="tagline_en">
+      <div class="row">
+        <div><label>Address</label><input id="address"></div>
+        <div><label>Phone</label><input id="phone"></div>
+      </div>
+      <div class="row">
+        <div><label>Email</label><input id="email_company"></div>
+        <div><label>VAT / P.IVA</label><input id="vat"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>About</h2>
+      <label>About (Italian)</label><textarea id="about_it"></textarea>
+      <label>About (English)</label><textarea id="about_en"></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Services</h2>
+      <div id="services-list"></div>
+      <button class="secondary" onclick="addService()" style="margin-top:10px;">+ Add Service</button>
+    </div>
+
+    <div class="card">
+      <h2>Showroom – Jobs Done</h2>
+      <label>Upload new photo</label>
+      <input type="file" id="photo-upload" accept="image/*" multiple>
+      <button onclick="uploadPhotos()" style="margin-top:8px;">Upload selected photos</button>
+      <div id="upload-status" class="status" style="display:none;"></div>
+      <div class="gallery-admin" id="showroom-grid"></div>
+    </div>
+
+    <button onclick="saveAll()" style="width:100%; padding:16px; font-size:16px;">Save all changes</button>
+    <div id="save-status" class="status" style="display:none;"></div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+    // Firebase config
+        const firebaseConfig = {
+  apiKey: "AIzaSyBVd_soyGaUr3dhEvxWNm7E9xA7YR9JC38",
+  authDomain: "ppr-admin.firebaseapp.com",
+  projectId: "ppr-admin",
+  storageBucket: "ppr-admin.firebasestorage.app",
+  messagingSenderId: "940757916424",
+  appId: "1:940757916424:web:613e4d4d521278b4c3eabd",
+  measurementId: "G-7C9QZP8CBL"
+};
+        
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    let currentData = { company: {}, about_it: "", about_en: "", services: [], showroom: [] };
+
+    window.login = async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const status = document.getElementById("login-status");
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (e) {
+        status.style.display = "block";
+        status.className = "status err";
+        status.textContent = "Login failed: " + e.message;
+      }
+    };
+
+    window.logout = () => signOut(auth);
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("admin").classList.remove("hidden");
+        await loadData();
+      } else {
+        document.getElementById("login").classList.remove("hidden");
+        document.getElementById("admin").classList.add("hidden");
+      }
+    });
+
+    async function loadData() {
+      const snap = await getDoc(doc(db, "site", "content"));
+      if (snap.exists()) {
+        currentData = snap.data();
+      }
+      // Fill form
+      const c = currentData.company || {};
+      document.getElementById("name").value = c.name || "";
+      document.getElementById("owner").value = c.owner || "";
+      document.getElementById("tagline_it").value = c.tagline_it || "";
+      document.getElementById("tagline_en").value = c.tagline_en || "";
+      document.getElementById("address").value = c.address || "";
+      document.getElementById("phone").value = c.phone || "";
+      document.getElementById("email_company").value = c.email || "";
+      document.getElementById("vat").value = c.vat || "";
+      document.getElementById("about_it").value = currentData.about_it || "";
+      document.getElementById("about_en").value = currentData.about_en || "";
+      renderServices();
+      renderShowroom();
+    }
+
+    function renderServices() {
+      const list = document.getElementById("services-list");
+      list.innerHTML = "";
+      (currentData.services || []).forEach((s, i) => {
+        const div = document.createElement("div");
+        div.className = "row";
+        div.style.marginBottom = "8px";
+        div.innerHTML = `
+          <input value="${s.it || ""}" placeholder="Italian" onchange="updateService(${i}, 'it', this.value)">
+          <input value="${s.en || ""}" placeholder="English" onchange="updateService(${i}, 'en', this.value)">
+          <button class="danger" onclick="removeService(${i})" style="flex:0 0 40px;">×</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    window.updateService = (i, lang, val) => {
+      currentData.services[i][lang] = val;
+    };
+    window.removeService = (i) => {
+      currentData.services.splice(i, 1);
+      renderServices();
+    };
+    window.addService = () => {
+      if (!currentData.services) currentData.services = [];
+      currentData.services.push({ it: "", en: "" });
+      renderServices();
+    };
+
+    function renderShowroom() {
+      const grid = document.getElementById("showroom-grid");
+      grid.innerHTML = "";
+      (currentData.showroom || []).forEach((item, i) => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <img src="${item.src}" alt="">
+          <button class="remove" onclick="removePhoto(${i})">×</button>
+        `;
+        grid.appendChild(div);
+      });
+    }
+
+    window.removePhoto = (i) => {
+      currentData.showroom.splice(i, 1);
+      renderShowroom();
+    };
+
+    
+    async function resizeImage(file, maxWidth = 1400, quality = 0.8) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          canvas.toBlob((blob) => {
+            URL.revokeObjectURL(url);
+            resolve(new File([blob], file.name, { type: "image/jpeg" }));
+          }, "image/jpeg", quality);
+        };
+        img.src = url;
+      });
+    }
+
+    window.uploadPhotos = async () => {
+      const files = document.getElementById("photo-upload").files;
+      const status = document.getElementById("upload-status");
+      if (!files.length) return;
+      status.style.display = "block";
+      status.className = "status";
+      status.textContent = "Uploading...";
+
+      if (!currentData.showroom) currentData.showroom = [];
+
+      for (const file of files) {
+        const resized = await resizeImage(file);
+        const storageRef = ref(storage, "showroom/" + Date.now() + "-" + file.name.replace(/\.[^.]+$/, ".jpg"));
+        await uploadBytes(storageRef, resized);
+        const url = await getDownloadURL(storageRef);
+        currentData.showroom.push({ src: url, alt: "Lavoro realizzato" });
+      }
+      status.className = "status ok";
+      status.textContent = "Uploaded " + files.length + " photo(s). Don't forget to Save.";
+      document.getElementById("photo-upload").value = "";
+      renderShowroom();
+    };
+
+    window.saveAll = async () => {
+      const status = document.getElementById("save-status");
+      status.style.display = "block";
+      status.className = "status";
+      status.textContent = "Saving...";
+
+      currentData.company = {
+        name: document.getElementById("name").value,
+        owner: document.getElementById("owner").value,
+        tagline_it: document.getElementById("tagline_it").value,
+        tagline_en: document.getElementById("tagline_en").value,
+        address: document.getElementById("address").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email_company").value,
+        vat: document.getElementById("vat").value
+      };
+      currentData.about_it = document.getElementById("about_it").value;
+      currentData.about_en = document.getElementById("about_en").value;
+
+      try {
+        await setDoc(doc(db, "site", "content"), currentData);
+        status.className = "status ok";
+        status.textContent = "Saved! The public site is updated.";
+      } catch (e) {
+        status.className = "status err";
+        status.textContent = "Error: " + e.message;
+      }
+    };
+  </script>
+</body>
+</html>
