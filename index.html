@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P.P.R. Posizione Pavimenti & Resine | Miri Topuzi</title>
+    <style>
+        :root {
+            --primary: #6b1a1a;
+            --secondary: #8b2e2e;
+            --accent: #c9a227;
+            --light: #f8f9fa;
+            --text: #333;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: var(--primary); color: var(--white); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .logo { height: 70px; background: white; border-radius: 5px; padding: 5px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .lang-switch { display: flex; gap: 10px; }
+        .lang-switch button { background: transparent; border: 1px solid var(--white); color: var(--white); padding: 5px 12px; cursor: pointer; border-radius: 4px; }
+        .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
+        .hero { height: 70vh; background: linear-gradient(rgba(107,26,26,0.65), rgba(107,26,26,0.65)), url('IMG_4488.jpg') center/cover; display: flex; align-items: center; color: var(--white); text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 15px; }
+        .hero p { font-size: 1.3rem; max-width: 800px; margin: 0 auto 30px; }
+        .btn { display: inline-block; background: var(--accent); color: var(--primary); padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #b8911f; }
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary); }
+        .about { background: var(--light); }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about img { width: 100%; border-radius: 10px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-card h3 { color: var(--primary); margin: 15px 0; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .gallery img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
+        .gallery img:hover { transform: scale(1.03); }
+
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 92%; max-height: 92%; object-fit: contain; border-radius: 4px; }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; font-weight: bold; }
+        .contact { background: var(--primary); color: var(--white); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info p { margin: 12px 0; font-size: 1.1rem; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        form input, form textarea { padding: 12px; border: none; border-radius: 5px; font-size: 1rem; }
+        form button { background: var(--accent); color: var(--primary); border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        footer { background: #4a1212; color: var(--white); text-align: center; padding: 30px 0; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-content, .contact-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <img src="logo.jpg" alt="P.P.R. Logo" class="logo">
+                <ul class="nav-links">
+                    <li><a href="#home" data-it="Home" data-en="Home">Home</a></li>
+                    <li><a href="#about" data-it="Chi Siamo" data-en="About Us">Chi Siamo</a></li>
+                    <li><a href="#services" data-it="Servizi" data-en="Services">Servizi</a></li>
+                    <li><a href="#gallery" data-it="Showroom" data-en="Showroom">Showroom</a></li>
+                    <li><a href="#contact" data-it="Contatti" data-en="Contact">Contatti</a></li>
+                </ul>
+                <div class="lang-switch">
+                    <button id="btn-it" class="active" onclick="setLanguage('it')">IT</button>
+                    <button id="btn-en" onclick="setLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-it="P.P.R. Posizione Pavimenti & Resine" data-en="P.P.R. Floor & Resin Installation">P.P.R. Posizione Pavimenti & Resine</h1>
+            <p data-it="Le vostre idee a regola d’arte" data-en="Your ideas, crafted to perfection">Le vostre idee a regola d’arte</p>
+            <a href="#contact" class="btn" data-it="Richiedi Preventivo" data-en="Request a Quote">Richiedi Preventivo</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title" data-it="Chi Siamo" data-en="About Us">Chi Siamo</h2>
+            <div class="about-content">
+                <div>
+                    <p data-it="P.P.R. è specializzata nella posa di pavimenti e rivestimenti in resina e materiali di alta qualità. Realizziamo soluzioni su misura per ambienti civili, residenziali e commerciali, trasformando le idee dei clienti in superfici eleganti, resistenti e durature." data-en="P.P.R. specializes in the installation of resin floors and high-quality coatings. We create custom solutions for civil, residential and commercial environments, turning clients’ ideas into elegant, durable and long-lasting surfaces.">P.P.R. è specializzata nella posa di pavimenti e rivestimenti in resina e materiali di alta qualità. Realizziamo soluzioni su misura per ambienti civili, residenziali e commerciali, trasformando le idee dei clienti in superfici eleganti, resistenti e durature.</p>
+                    <br>
+                    <p data-it="Ogni progetto è seguito con cura e professionalità, dalla consulenza iniziale alla posa finale, per garantire un risultato a regola d’arte." data-en="Every project is handled with care and professionalism, from the initial consultation to the final installation, to ensure a perfect result.">Ogni progetto è seguito con cura e professionalità, dalla consulenza iniziale alla posa finale, per garantire un risultato a regola d’arte.</p>
+                </div>
+                <img src="IMG_4488.jpg" alt="Realizzazione cucina in resina effetto marmo">
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title" data-it="I Nostri Servizi" data-en="Our Services">I Nostri Servizi</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3 data-it="Pavimenti in Resina" data-en="Resin Floors">Pavimenti in Resina</h3>
+                    <p data-it="Pavimenti continui, resistenti e personalizzabili. Ideali per case, negozi e ambienti di lavoro." data-en="Continuous, durable and customizable floors. Ideal for homes, shops and workplaces.">Pavimenti continui, resistenti e personalizzabili. Ideali per case, negozi e ambienti di lavoro.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Rivestimenti" data-en="Coatings">Rivestimenti</h3>
+                    <p data-it="Rivestimenti per pareti, cucine e bagni con effetti marmo, pietra e design moderno." data-en="Wall coatings for kitchens and bathrooms with marble, stone and modern design effects.">Rivestimenti per pareti, cucine e bagni con effetti marmo, pietra e design moderno.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Pavimenti Decorativi" data-en="Decorative Floors">Pavimenti Decorativi</h3>
+                    <p data-it="Pavimenti in ciottoli, effetto pietra e soluzioni estetiche per interni ed esterni." data-en="Pebble floors, stone-effect and aesthetic solutions for indoor and outdoor spaces.">Pavimenti in ciottoli, effetto pietra e soluzioni estetiche per interni ed esterni.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Ristrutturazioni" data-en="Renovations">Ristrutturazioni</h3>
+                    <p data-it="Rinnovo di pavimenti e rivestimenti esistenti senza demolizioni, con risultati rapidi e di qualità." data-en="Renovation of existing floors and coatings without demolition, with fast and high-quality results.">Rinnovo di pavimenti e rivestimenti esistenti senza demolizioni, con risultati rapidi e di qualità.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <section id="gallery" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title" data-it="Showroom – Lavori Realizzati" data-en="Showroom – Completed Works">Showroom – Lavori Realizzati</h2>
+            <p style="text-align:center; max-width:800px; margin:0 auto 40px;" data-it="Tutti i nostri lavori realizzati: pavimenti in resina e legno, rivestimenti in marmo e mosaico, impermeabilizzazioni, bagni, hotel, spa, piscine e spazi commerciali. Clicca sulle immagini per ingrandirle." data-en="All our completed works: resin and wood floors, marble and mosaic coatings, waterproofing, bathrooms, hotels, spas, pools and commercial spaces. Click on the images to enlarge them.">Tutti i nostri lavori realizzati: pavimenti in resina e legno, rivestimenti in marmo e mosaico, impermeabilizzazioni, bagni, hotel, spa, piscine e spazi commerciali. Clicca sulle immagini per ingrandirle.</p>
+            <div class="gallery">
+                <img src="showroom/002ee018-d760-4f15-852b-7fc926892fbf.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/03f3c73e-828c-4d40-a396-458042d448a1.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/05fd841e-a654-4c39-af16-ebcbe7da6770.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/0764144c-7429-4f43-97a3-aabc4804d005.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/07a68be0-79e8-4aea-81d2-95cf996acece.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/07b6c9f5-8b2d-4c94-afa4-f196f69e7aba.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/1681fa35-fb35-4539-9af4-047cf2540236.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/1c289f65-2b8a-41d0-a160-13b93822ba41.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/1cd8acb1-b1a9-4911-86de-baae9d2bc598.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/1ebe88e8-06cf-4386-b1b0-f5b3aeb68a8d.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/1f68e36b-45a4-4376-a227-3a94fdf26320.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/20f4038a-fae0-47d4-bf06-28913b786bee.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/235960f7-bdef-42a2-aa08-b64d92bcde79.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/24ed7f7f-dc14-49f5-bafd-f772fb93f0cd.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/2950a706-c026-408e-833d-5c9e24828178.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/2aa2d715-9358-4774-8f98-ed44f48a0491.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/2b945d1c-c5d2-40e7-9b16-879786828b62.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/2da3ded9-8889-4cbb-b776-f97f83f41834.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/31390510-d589-4fbb-8e50-906b55037f19.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/3b4a808c-1b44-4cf8-b035-f5cfb6b55a07.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/4060158b-1be3-486c-8c93-98c4a3c30164.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/49d3eeea-77f8-47ec-8b42-c4b81a432762.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/4dacbc7d-5f93-40a9-ac54-0a0dc3efae3c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/4dc89e1e-2c68-4428-a633-4d7555a70299.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/4f959c1a-6f2d-4912-b4c7-914e2e4f46a8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/563f703a-7855-4e7a-adb8-ff08e0bcdb3b.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/57662400-32b6-4e3f-ade1-c4e75f8c4108.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/58f9a99d-024a-46b7-bc80-5444e003b5f8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/5a9192ed-53ab-40d4-9a4a-23f696b0f0c8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/5f6ab22d-42b7-44bf-bc30-6b5975f2389d.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/5fa8bd93-9f3b-4404-9368-ece5e3cf35e8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/62f42f00-eb21-4879-8960-63fae4b564a2.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/63530f59-a7f6-4c1e-9aba-be186c90539b.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/63e9fac3-3426-49a3-b586-9ee9ff5d3b49.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/6406c173-b193-4361-89c9-8fa3dd4a682a.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/6422bb2a-ff90-431a-93da-a4cb745fa1c3.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/64728cec-b2fa-42bf-b749-75030253e16d.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/67993ca4-7df4-4901-8c90-637889d525db.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/6c63cc72-7d05-4d5b-9a8a-6000feb440ba.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/6d6f1f7e-5399-4a46-bac7-b7f6f74981c8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/72de2c9c-7a3c-4161-ac54-2102745c5595.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/73d3024f-1d9a-46b4-91ac-6b3f04697ae9.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/768e8ba3-bdd8-4c7f-a25a-380201cd3de2.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/7829321c-7078-4f19-967c-6f367f6c70ff.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/79c533b9-6d5e-4724-a0d4-bbc913c4c381.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/79f84ab0-8d6a-4d41-96ee-fb79ec7877e0.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/7d9db4e7-9190-4d95-af7f-8cd40b3c7e19.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/8309a983-4a63-49af-8d94-f6a239939aea.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/831905b2-4b3a-4af4-ba45-a27e0845f142.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/83924072-f91e-4ecb-a070-d622e30559f7.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/865ce5eb-0b95-4db6-8248-fcd0401a52eb.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/87777611-8b3e-4a7a-9327-f7303cc530bf.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/88529dd7-2057-4dd5-b6f9-bffc6557038c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/8884e94a-2d1c-4232-9200-787153a4c5af.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/8d9024af-8b1d-4ea2-a259-03eab4786194.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/91822752-9476-4634-9ff5-9d67a04113b1.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/940c197f-c219-4b92-824b-32cb0d81dd5c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/94305f95-7f71-4821-8165-872e2b2b3eb9.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/945a5f56-2089-4bb9-8a3c-6a0d5756523b.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/97c5f77d-2eaa-4439-8f10-e899bede54ae.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9a9cc4c9-5fa3-47c5-a711-932ca950941a.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9afa43a9-45e1-4a46-bcc7-cd183cc739a4.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9c65404f-f16c-41c6-88c6-9c8cd4d8909b.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9d8ea615-e8c6-4d0c-a0a4-8badf549c12f.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9e822ff4-df66-4b72-8592-1543dac5d025.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/9f22c6bc-7599-40aa-bf88-04613db75233.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/IMG_4484.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/IMG_4485.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/IMG_4486.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/IMG_4487.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/IMG_4488.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/a0883a63-7e68-438b-91fa-aed3bb874ce8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/a2320aca-56fa-4b52-88f3-51c6f48691c2.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/a7f436cd-a4a5-400f-9c2a-f85f88b6148c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/aa967b7f-4ffc-4cc9-9db6-414d3576a8d9.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/abe22ba1-c2d0-4461-b29e-17043f88738c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/ae407859-e12a-497e-9d3f-5dd4d31fd973.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/b95223fd-f239-459c-bdd1-490ff056c3e2.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/ba5fa3c7-18fb-4fff-8e88-f6f26e700c03.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c0bd5f42-7829-4609-b802-26af781547ec.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c1359ba1-23e2-48a6-8cf8-7dd51bf2b5ca.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c70c8d7a-8662-440b-a16e-6db57c9dd397.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c7249df1-db02-41c1-9638-22191d66ad7c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c837e087-d7ca-4a50-89bd-fd7965e0531c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/c96c633a-1092-4b35-b4b4-b774bd063a54.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/cadb686c-2a1d-4376-8c4a-37fe1a284540.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/cbb6e85c-b4ce-4968-b780-a215713c73c5.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/d5caf31b-79fa-48e5-913d-6583a7f7f58d.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/e021783a-41a8-45ff-83bc-13a5b02602ba.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/e389053c-700d-422b-bd3c-06d03a239274.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/e392e20a-2bf1-4b3b-b09e-7211a8074894.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/e4cb3cd7-4daa-464b-ac0b-06c8e4b27254.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/e85307d2-1bde-42b4-b719-aa1997d48a2a.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/eded83fc-b436-4228-9d10-dccafb83de84.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/ef98ca1e-cfbf-483d-8054-3236c370ca90.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/efd43d68-6f58-4ea0-a515-45fba0f1180b.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/f22c9aad-fff2-45ca-aac5-13c3efb3a85f.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/f4654eb8-40d8-4d89-983c-ccffa88dec2f.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/f88678b9-3606-426e-b262-fc0e68ecae9d.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fa4f501b-decc-4dd1-aa3a-050c1605f2c9.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fb276a68-3409-4af6-aa14-b7ef4beeeb31.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fb4a5ff0-e10d-4029-ab31-b6ccd7408ae2.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fc2c3719-105a-4496-acc6-9df6fe60eaa8.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fda66693-8a95-464c-a6ae-50f94f798a19.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fdc72798-8041-4756-84fa-d2faaeb82c9c.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fe845f08-f768-4e8e-a7ac-b7dbf8ff61a9.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+                <img src="showroom/fedc9fb4-9e8d-40b2-8d60-683d842881cd.jpg" alt="Lavoro realizzato - Pavimenti e Rivestimenti" loading="lazy">
+
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--white);" data-it="Contattaci" data-en="Contact Us">Contattaci</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-it="Sede e Contatti" data-en="Address & Contacts">Sede e Contatti</h3>
+                    <p><strong>Miri</strong><br>Topuzi Jetmir</p>
+                    <p>Via Palmiro Togliatti 26<br>47043 Sant’Angelo di Gatteo (FC)<br>Italia / Italy</p>
+                    <p><strong>Tel:</strong> 348 5569164</p>
+                    <p><strong>Email:</strong> topuzipavimenti@hotmail.com</p>
+                    <p><strong>P.IVA:</strong> 04312420401</p>
+                    <p>Instagram: Pavimenti P.P.R</p>
+                </div>
+                <form onsubmit="event.preventDefault(); alert(document.documentElement.lang === 'en' ? 'Thank you! We will contact you soon.' : 'Grazie! Ti contatteremo presto.'); this.reset();">
+                    <input type="text" placeholder="Nome / Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Telefono / Phone">
+                    <textarea rows="5" placeholder="Messaggio / Message" required></textarea>
+                    <button type="submit" data-it="Invia" data-en="Send">Invia</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 P.P.R. Posizione Pavimenti & Resine di Topuzi Jetmir. Tutti i diritti riservati. | All rights reserved.</p>
+            <p>P. IVA / VAT: 04312420401</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-it]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            const placeholders = {
+                it: { name: 'Nome', email: 'Email', phone: 'Telefono', message: 'Messaggio' },
+                en: { name: 'Name', email: 'Email', phone: 'Phone', message: 'Message' }
+            };
+            const inputs = document.querySelectorAll('form input, form textarea');
+            if (inputs[0]) inputs[0].placeholder = placeholders[lang].name;
+            if (inputs[1]) inputs[1].placeholder = placeholders[lang].email;
+            if (inputs[2]) inputs[2].placeholder = placeholders[lang].phone;
+            if (inputs[3]) inputs[3].placeholder = placeholders[lang].message;
+        }
+        setLanguage('it');
+
+        // Lightbox
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = '<span class="lightbox-close">&times;</span><img>';
+        document.body.appendChild(lightbox);
+
+        const lbImg = lightbox.querySelector('img');
+        const lbClose = lightbox.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.gallery img').forEach(img => {
+            img.addEventListener('click', () => {
+                lbImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lbClose.addEventListener('click', () => lightbox.classList.remove('active'));
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') lightbox.classList.remove('active'); });
+    </script>
+</body>
+</html>
