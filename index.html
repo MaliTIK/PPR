@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P.P.R. Pavimenti e Rivestimenti in Resina | P&R Resine Erbusco</title>
+    <style>
+        :root {
+            --primary: #0a2540;
+            --secondary: #1e3a5f;
+            --accent: #c9a227;
+            --light: #f8f9fa;
+            --text: #333;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: var(--primary); color: var(--white); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo { height: 60px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .lang-switch { display: flex; gap: 10px; }
+        .lang-switch button { background: transparent; border: 1px solid var(--white); color: var(--white); padding: 5px 12px; cursor: pointer; border-radius: 4px; }
+        .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
+        .hero { height: 70vh; background: linear-gradient(rgba(10,37,64,0.6), rgba(10,37,64,0.6)), url('imagine_images/d7tT3.jpg') center/cover; display: flex; align-items: center; color: var(--white); text-align: center; }
+        .hero h1 { font-size: 3.2rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.4rem; max-width: 800px; margin: 0 auto 30px; }
+        .btn { display: inline-block; background: var(--accent); color: var(--primary); padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #b8911f; }
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary); }
+        .about { background: var(--light); }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about img { width: 100%; border-radius: 10px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-card h3 { color: var(--primary); margin: 15px 0; }
+        .values { display: flex; justify-content: space-around; text-align: center; flex-wrap: wrap; gap: 30px; }
+        .value { max-width: 300px; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .gallery img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; }
+        .contact { background: var(--primary); color: var(--white); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info p { margin: 15px 0; font-size: 1.1rem; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        form input, form textarea { padding: 12px; border: none; border-radius: 5px; font-size: 1rem; }
+        form button { background: var(--accent); color: var(--primary); border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        footer { background: #081c30; color: var(--white); text-align: center; padding: 30px 0; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-content, .contact-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <img src="imagine_images/8dT0y.jpg" alt="PPR Logo" class="logo">
+                <ul class="nav-links">
+                    <li><a href="#home" data-it="Home" data-en="Home">Home</a></li>
+                    <li><a href="#about" data-it="Chi Siamo" data-en="About Us">Chi Siamo</a></li>
+                    <li><a href="#services" data-it="Servizi" data-en="Services">Servizi</a></li>
+                    <li><a href="#gallery" data-it="Galleria" data-en="Gallery">Galleria</a></li>
+                    <li><a href="#contact" data-it="Contatti" data-en="Contact">Contatti</a></li>
+                </ul>
+                <div class="lang-switch">
+                    <button id="btn-it" class="active" onclick="setLanguage('it')">IT</button>
+                    <button id="btn-en" onclick="setLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-it="Pavimenti e Rivestimenti in Resina" data-en="Resin Floors and Coatings">Pavimenti e Rivestimenti in Resina</h1>
+            <p data-it="Costruiamo la base di ogni impresa. Soluzioni professionali in resina dal 1993." data-en="Building the foundation of every enterprise. Professional resin solutions since 1993.">Costruiamo la base di ogni impresa. Soluzioni professionali in resina dal 1993.</p>
+            <a href="#contact" class="btn" data-it="Richiedi Preventivo" data-en="Request a Quote">Richiedi Preventivo</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title" data-it="Chi Siamo" data-en="About Us">Chi Siamo</h2>
+            <div class="about-content">
+                <div>
+                    <p data-it="P&R / P.P.R. opera nel settore dei sistemi resinosi dal 1993. Il nostro personale lavora in sinergia per offrire consulenza e assistenza precisa e costante. Offriamo una vasta gamma di soluzioni personalizzate grazie alla professionalità e alla formazione continua dei nostri dipendenti." data-en="P&R / P.P.R. has been operating in the resin systems sector since 1993. Our staff works in synergy to provide precise and constant consulting and assistance. We offer a wide range of customized solutions thanks to the professionalism and continuous training of our employees.">P&R / P.P.R. opera nel settore dei sistemi resinosi dal 1993. Il nostro personale lavora in sinergia per offrire consulenza e assistenza precisa e costante. Offriamo una vasta gamma di soluzioni personalizzate grazie alla professionalità e alla formazione continua dei nostri dipendenti.</p>
+                    <br>
+                    <p data-it="Tutti i sistemi realizzati sono conformi alla normativa UNI 10966, con prodotti a marcatura CE secondo UNI 1504-2 e UNI 13813, corredati da DOP secondo regolamento UE 305/2011. Soddisfiamo le richieste di sicurezza sul lavoro e ambiente." data-en="All systems we create comply with UNI 10966, using CE marked products according to UNI 1504-2 and UNI 13813, accompanied by DOP according to EU Regulation 305/2011. We meet workplace and environmental safety requirements.">Tutti i sistemi realizzati sono conformi alla normativa UNI 10966, con prodotti a marcatura CE secondo UNI 1504-2 e UNI 13813, corredati da DOP secondo regolamento UE 305/2011. Soddisfiamo le richieste di sicurezza sul lavoro e ambiente.</p>
+                </div>
+                <img src="searched_images/83843.jpg" alt="Resin floor example">
+            </div>
+            <div class="values" style="margin-top: 50px;">
+                <div class="value">
+                    <h3 data-it="Professionalità" data-en="Professionalism">Professionalità</h3>
+                    <p data-it="Soluzioni tecniche su misura per ogni esigenza." data-en="Tailored technical solutions for every need.">Soluzioni tecniche su misura per ogni esigenza.</p>
+                </div>
+                <div class="value">
+                    <h3 data-it="Esperienza" data-en="Experience">Esperienza</h3>
+                    <p data-it="Oltre 30 anni di passione per la resina." data-en="Over 30 years of passion for resin.">Oltre 30 anni di passione per la resina.</p>
+                </div>
+                <div class="value">
+                    <h3 data-it="Resilienza" data-en="Resilience">Resilienza</h3>
+                    <p data-it="Capacità di adattamento a contesti mutevoli." data-en="Ability to adapt to changing contexts.">Capacità di adattamento a contesti mutevoli.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title" data-it="I Nostri Servizi" data-en="Our Services">I Nostri Servizi</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3 data-it="Pavimenti Industriali" data-en="Industrial Floors">Pavimenti Industriali</h3>
+                    <p data-it="Sistemi resinosi ad alte prestazioni per ambienti produttivi, magazzini e aree a forte traffico. Resistenti a usura, chimici e carichi." data-en="High-performance resin systems for production environments, warehouses and high-traffic areas. Resistant to wear, chemicals and loads.">Sistemi resinosi ad alte prestazioni per ambienti produttivi, magazzini e aree a forte traffico. Resistenti a usura, chimici e carichi.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Pavimenti Decorativi" data-en="Decorative Floors">Pavimenti Decorativi</h3>
+                    <p data-it="Soluzioni estetiche per ambienti civili, commerciali e residenziali. Effetti moderni, continui e personalizzabili." data-en="Aesthetic solutions for civil, commercial and residential environments. Modern, continuous and customizable effects.">Soluzioni estetiche per ambienti civili, commerciali e residenziali. Effetti moderni, continui e personalizzabili.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Rivestimenti" data-en="Coatings">Rivestimenti</h3>
+                    <p data-it="Rivestimenti in resina per pareti e superfici verticali. Ideali per rinnovi senza demolizioni." data-en="Resin coatings for walls and vertical surfaces. Ideal for renovations without demolition.">Rivestimenti in resina per pareti e superfici verticali. Ideali per rinnovi senza demolizioni.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Ristrutturazioni" data-en="Renovations">Ristrutturazioni</h3>
+                    <p data-it="Applicazione su pavimenti esistenti (piastrelle, cemento) per un rinnovamento rapido e senza stress." data-en="Application on existing floors (tiles, concrete) for a quick and stress-free renovation.">Applicazione su pavimenti esistenti (piastrelle, cemento) per un rinnovamento rapido e senza stress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title" data-it="Galleria" data-en="Gallery">Galleria</h2>
+            <div class="gallery">
+                <img src="searched_images/GnM4s.jpg" alt="Industrial resin floor">
+                <img src="searched_images/vnX6j.jpg" alt="Commercial epoxy floor">
+                <img src="searched_images/IuesJ.jpg" alt="Decorative living room floor">
+                <img src="searched_images/V0Z5J.jpg" alt="Metallic resin floor">
+                <img src="searched_images/HZfNY.jpg" alt="Modern residential resin floor">
+                <img src="searched_images/83843.jpg" alt="Clean resin floor">
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--white);" data-it="Contattaci" data-en="Contact Us">Contattaci</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-it="Sede" data-en="Headquarters">Sede</h3>
+                    <p>Via dell'Industria 24<br>25030 Erbusco (BS)<br>Italia / Italy</p>
+                    <p><strong>Tel:</strong> +39 030 7704810</p>
+                    <p><strong>Email:</strong> info@pr-resine.com</p>
+                    <p data-it="Orari: Lun-Ven 8:30-18:00" data-en="Hours: Mon-Fri 8:30-18:00">Orari: Lun-Ven 8:30-18:00</p>
+                </div>
+                <form onsubmit="event.preventDefault(); alert(document.documentElement.lang === 'en' ? 'Thank you! We will contact you soon.' : 'Grazie! Ti contatteremo presto.'); this.reset();">
+                    <input type="text" placeholder="Nome / Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Telefono / Phone">
+                    <textarea rows="5" placeholder="Messaggio / Message" required></textarea>
+                    <button type="submit" data-it="Invia" data-en="Send">Invia</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 P.P.R. / P&R Pavimenti e Rivestimenti in Resina. Tutti i diritti riservati. | All rights reserved.</p>
+            <p>P. IVA / VAT: 02125730982</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-it]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            // Update placeholders
+            const placeholders = {
+                it: { name: 'Nome', email: 'Email', phone: 'Telefono', message: 'Messaggio' },
+                en: { name: 'Name', email: 'Email', phone: 'Phone', message: 'Message' }
+            };
+            const inputs = document.querySelectorAll('form input, form textarea');
+            if (inputs[0]) inputs[0].placeholder = placeholders[lang].name;
+            if (inputs[1]) inputs[1].placeholder = placeholders[lang].email;
+            if (inputs[2]) inputs[2].placeholder = placeholders[lang].phone;
+            if (inputs[3]) inputs[3].placeholder = placeholders[lang].message;
+        }
+        // Init
+        setLanguage('it');
+    </script>
+</body>
+</html>
