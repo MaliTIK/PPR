@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P.P.R. Posizione Pavimenti & Resine | Miri Topuzi</title>
+    <style>
+        :root {
+            --primary: #6b1a1a;
+            --secondary: #8b2e2e;
+            --accent: #c9a227;
+            --light: #f8f9fa;
+            --text: #333;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: var(--text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { background: var(--primary); color: var(--white); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .logo { height: 70px; background: white; border-radius: 5px; padding: 5px; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { color: var(--white); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .lang-switch { display: flex; gap: 10px; }
+        .lang-switch button { background: transparent; border: 1px solid var(--white); color: var(--white); padding: 5px 12px; cursor: pointer; border-radius: 4px; }
+        .lang-switch button.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
+        .hero { height: 70vh; background: linear-gradient(rgba(107,26,26,0.65), rgba(107,26,26,0.65)), url('IMG_4488.jpg') center/cover; display: flex; align-items: center; color: var(--white); text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 15px; }
+        .hero p { font-size: 1.3rem; max-width: 800px; margin: 0 auto 30px; }
+        .btn { display: inline-block; background: var(--accent); color: var(--primary); padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s; }
+        .btn:hover { background: #b8911f; }
+        section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--primary); }
+        .about { background: var(--light); }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about img { width: 100%; border-radius: 10px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card { background: var(--white); padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-card h3 { color: var(--primary); margin: 15px 0; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .gallery img { width: 100%; height: 250px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
+        .gallery img:hover { transform: scale(1.03); }
+        .contact { background: var(--primary); color: var(--white); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info p { margin: 12px 0; font-size: 1.1rem; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        form input, form textarea { padding: 12px; border: none; border-radius: 5px; font-size: 1rem; }
+        form button { background: var(--accent); color: var(--primary); border: none; padding: 12px; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        footer { background: #4a1212; color: var(--white); text-align: center; padding: 30px 0; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .about-content, .contact-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <img src="logo.jpg" alt="P.P.R. Logo" class="logo">
+                <ul class="nav-links">
+                    <li><a href="#home" data-it="Home" data-en="Home">Home</a></li>
+                    <li><a href="#about" data-it="Chi Siamo" data-en="About Us">Chi Siamo</a></li>
+                    <li><a href="#services" data-it="Servizi" data-en="Services">Servizi</a></li>
+                    <li><a href="#gallery" data-it="Galleria" data-en="Gallery">Galleria</a></li>
+                    <li><a href="#contact" data-it="Contatti" data-en="Contact">Contatti</a></li>
+                </ul>
+                <div class="lang-switch">
+                    <button id="btn-it" class="active" onclick="setLanguage('it')">IT</button>
+                    <button id="btn-en" onclick="setLanguage('en')">EN</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-it="P.P.R. Posizione Pavimenti & Resine" data-en="P.P.R. Floor & Resin Installation">P.P.R. Posizione Pavimenti & Resine</h1>
+            <p data-it="Le vostre idee a regola d’arte" data-en="Your ideas, crafted to perfection">Le vostre idee a regola d’arte</p>
+            <a href="#contact" class="btn" data-it="Richiedi Preventivo" data-en="Request a Quote">Richiedi Preventivo</a>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title" data-it="Chi Siamo" data-en="About Us">Chi Siamo</h2>
+            <div class="about-content">
+                <div>
+                    <p data-it="P.P.R. è specializzata nella posa di pavimenti e rivestimenti in resina e materiali di alta qualità. Realizziamo soluzioni su misura per ambienti civili, residenziali e commerciali, trasformando le idee dei clienti in superfici eleganti, resistenti e durature." data-en="P.P.R. specializes in the installation of resin floors and high-quality coatings. We create custom solutions for civil, residential and commercial environments, turning clients’ ideas into elegant, durable and long-lasting surfaces.">P.P.R. è specializzata nella posa di pavimenti e rivestimenti in resina e materiali di alta qualità. Realizziamo soluzioni su misura per ambienti civili, residenziali e commerciali, trasformando le idee dei clienti in superfici eleganti, resistenti e durature.</p>
+                    <br>
+                    <p data-it="Ogni progetto è seguito con cura e professionalità, dalla consulenza iniziale alla posa finale, per garantire un risultato a regola d’arte." data-en="Every project is handled with care and professionalism, from the initial consultation to the final installation, to ensure a perfect result.">Ogni progetto è seguito con cura e professionalità, dalla consulenza iniziale alla posa finale, per garantire un risultato a regola d’arte.</p>
+                </div>
+                <img src="IMG_4488.jpg" alt="Realizzazione cucina in resina effetto marmo">
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title" data-it="I Nostri Servizi" data-en="Our Services">I Nostri Servizi</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3 data-it="Pavimenti in Resina" data-en="Resin Floors">Pavimenti in Resina</h3>
+                    <p data-it="Pavimenti continui, resistenti e personalizzabili. Ideali per case, negozi e ambienti di lavoro." data-en="Continuous, durable and customizable floors. Ideal for homes, shops and workplaces.">Pavimenti continui, resistenti e personalizzabili. Ideali per case, negozi e ambienti di lavoro.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Rivestimenti" data-en="Coatings">Rivestimenti</h3>
+                    <p data-it="Rivestimenti per pareti, cucine e bagni con effetti marmo, pietra e design moderno." data-en="Wall coatings for kitchens and bathrooms with marble, stone and modern design effects.">Rivestimenti per pareti, cucine e bagni con effetti marmo, pietra e design moderno.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Pavimenti Decorativi" data-en="Decorative Floors">Pavimenti Decorativi</h3>
+                    <p data-it="Pavimenti in ciottoli, effetto pietra e soluzioni estetiche per interni ed esterni." data-en="Pebble floors, stone-effect and aesthetic solutions for indoor and outdoor spaces.">Pavimenti in ciottoli, effetto pietra e soluzioni estetiche per interni ed esterni.</p>
+                </div>
+                <div class="service-card">
+                    <h3 data-it="Ristrutturazioni" data-en="Renovations">Ristrutturazioni</h3>
+                    <p data-it="Rinnovo di pavimenti e rivestimenti esistenti senza demolizioni, con risultati rapidi e di qualità." data-en="Renovation of existing floors and coatings without demolition, with fast and high-quality results.">Rinnovo di pavimenti e rivestimenti esistenti senza demolizioni, con risultati rapidi e di qualità.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title" data-it="Galleria Lavori" data-en="Work Gallery">Galleria Lavori</h2>
+            <div class="gallery">
+                <img src="IMG_4488.jpg" alt="Cucina effetto marmo verde">
+                <img src="IMG_4486.jpg" alt="Posa rivestimento marmo verde">
+                <img src="IMG_4485.jpg" alt="Pavimento in ciottoli neri">
+                <img src="IMG_4484.jpg" alt="Dettaglio pavimento ciottoli">
+                <img src="IMG_4487.jpg" alt="Bagno in marmo bianco">
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: var(--white);" data-it="Contattaci" data-en="Contact Us">Contattaci</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 data-it="Sede e Contatti" data-en="Address & Contacts">Sede e Contatti</h3>
+                    <p><strong>Miri</strong><br>Topuzi Jetmir</p>
+                    <p>Via Palmiro Togliatti 26<br>47043 Sant’Angelo di Gatteo (FC)<br>Italia / Italy</p>
+                    <p><strong>Tel:</strong> 348 5569164</p>
+                    <p><strong>Email:</strong> topuzipavimenti@hotmail.com</p>
+                    <p><strong>P.IVA:</strong> 04312420401</p>
+                    <p>Instagram: Pavimenti P.P.R</p>
+                </div>
+                <form onsubmit="event.preventDefault(); alert(document.documentElement.lang === 'en' ? 'Thank you! We will contact you soon.' : 'Grazie! Ti contatteremo presto.'); this.reset();">
+                    <input type="text" placeholder="Nome / Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Telefono / Phone">
+                    <textarea rows="5" placeholder="Messaggio / Message" required></textarea>
+                    <button type="submit" data-it="Invia" data-en="Send">Invia</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 P.P.R. Posizione Pavimenti & Resine di Topuzi Jetmir. Tutti i diritti riservati. | All rights reserved.</p>
+            <p>P. IVA / VAT: 04312420401</p>
+        </div>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-it]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+            const placeholders = {
+                it: { name: 'Nome', email: 'Email', phone: 'Telefono', message: 'Messaggio' },
+                en: { name: 'Name', email: 'Email', phone: 'Phone', message: 'Message' }
+            };
+            const inputs = document.querySelectorAll('form input, form textarea');
+            if (inputs[0]) inputs[0].placeholder = placeholders[lang].name;
+            if (inputs[1]) inputs[1].placeholder = placeholders[lang].email;
+            if (inputs[2]) inputs[2].placeholder = placeholders[lang].phone;
+            if (inputs[3]) inputs[3].placeholder = placeholders[lang].message;
+        }
+        setLanguage('it');
+    </script>
+</body>
+</html>
